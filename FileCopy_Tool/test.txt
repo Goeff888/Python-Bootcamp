@@ -1,0 +1,8 @@
+Eintrag: erste Aktion
+Quellverzeichnis: .
+Zielverzeichnis: E:\Daten\Programmieren\Python-Bootcamp\FileCopy_Tool 
+Dateiliste:sds
+Dateiliste:sderes
+Dateiliste:sdewfcs
+Dateiliste:sdetgs
+Ende
