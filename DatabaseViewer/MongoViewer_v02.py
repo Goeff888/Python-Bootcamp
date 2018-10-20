@@ -3,19 +3,28 @@ from pymongo import MongoClient
 import tkinter as tk
 from tkinter import Tk, BOTH, Menu
 
-def onselect(evt):
+def onselect(evt,client):
     # Note here that Tkinter passes an event object to onselect()
     w = evt.widget
     index = int(w.curselection()[0])
     value = w.get(index)
     print ('You selected item %d:' ,index, value)
     #Hier Anzeige von Eintr?gen in Collection
+    client = MongoClient("localhost", 27017)
+    dbHomepage = client["homepage"]#hier Listbox f?rDocuments
+    self.lbDocuments = tk.Listbox(self)
+    self.lbCollections.pack()
+    self.lbCollections.bind('<<ListboxSelect>>', onselect(client))
+    for item in colHomepage:
+        self.lbCollections.insert(tk.END,item)
 
+    
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.pack()
         self.create_widgets()
+
 
     def create_widgets(self):
         self.showCons = tk.Menubutton(self,text="condiments")
@@ -41,15 +50,11 @@ class Application(tk.Frame):
         
     def createCon(self):
         print("Verbindung aufbauen")
+        print("no error handling if mongo not started")
         client = MongoClient("localhost", 27017)
         dbHomepage = client["homepage"]
         colHomepage = dbHomepage.list_collection_names()
-        print(dbHomepage.list_collection_names())
-        self.lbCollections = tk.Listbox(self)
-        self.lbCollections.pack()
-        self.lbCollections.bind('<<ListboxSelect>>', onselect)
-        for item in colHomepage:
-            self.lbCollections.insert(tk.END,item)
+        
       
 
 root = tk.Tk()
