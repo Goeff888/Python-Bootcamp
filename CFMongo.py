@@ -25,23 +25,35 @@ def createNewSettingsDB():
  
 def createNewFileDB(setting):
     print('Neues Dateisammlung fuer ein Projekt anlegen')
-    for filename in os.listdir(setting["source"]):#[:len(source)-1]
-        for fileToCompare in setting["ignoredFiles"]:
-           if (filename != fileToCompare):
-            #if (filename[0:1] != "." or filename != fileToCompare):
-                #print(filename[0:1])
-                print(filename)
-                print(fileToCompare)
-                print("_____________")
-                break
-    
-    collection = {"name": "Homepage",
-            "filePathName": "Pfadname",
-            "lastUpdated":"D:\Programmieren\GitHub\Homepage\MSIExtreme",
-            "status":"D:\Programmieren\GitHub\Homepage\server"}
-    result = dbProjectFiles.insert_one(collection)
-    print (result)
-
+    for filename in os.listdir(setting["source"]):
+        tempFileStatus = 0
+        if (filename[0:1] == "."):
+            print("Datei beginnt mit einem Punkt .")
+            tempFileStatus = 1    
+        elif(os.path.isdir(setting["source"] + "\\" + filename)):
+            print("Datei ist ein Verzeichnis und wird hier mit ignored folders verglichen")
+            tempFileStatus = 2
+        else:
+            for fileToCompare in setting["ignoredFiles"]:
+                if (filename == fileToCompare):
+                    break
+                else:
+                    tempFileStatus = 3
+        print(tempFileStatus)
+            #collection = {"name": "Homepage",
+                   # "filePathName": "Pfadname",
+                    #"lastUpdated":"D:\Programmieren\GitHub\Homepage\MSIExtreme",
+                    #"status":"D:\Programmieren\GitHub\Homepage\server"}
+                #result = dbProjectFiles.insert_one(collection)
+            #print (collection)
+        #if ("Entweder Datei aus obiger Abfrage"):
+         #   print("Datei mit Status neu anlegen")
+        #elif("Verzeichnis aus obiger Abfrage"):
+         #    print("Verzeichnis mit Status neu anlegen")
+        #else:
+         #   print("Nichts machen")
+            
+            
 def deleteDatabases(entry):
     dBproject.delete_one(settings)
 ###########CODE      
